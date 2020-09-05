@@ -5,10 +5,19 @@ import { GameEngineUpdateEventOptionType } from 'react-native-game-engine';
 // Physics system
 // Update Matter.js world with each tick
 export const onPhysics = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
+
+  // Animate wizard
+  if (entities.wizard.lastAnimationDelta > 400) {
+    entities.wizard.currentImage = (entities.wizard.currentImage +1) % 4;
+    entities.wizard.lastAnimationDelta = 0;
+  } else {
+    entities.wizard.lastAnimationDelta = entities.wizard.lastAnimationDelta + time.delta;
+  }
+
+  // Update physics
   let engine = entities.physics.engine;
   engine.world.gravity.y = 0;
   Matter.Engine.update(engine, time.delta);
-
   return entities;
 };
 
@@ -17,7 +26,7 @@ export const onPhysics = (entities: any, { time }: GameEngineUpdateEventOptionTy
 export const onTouch = (entities: any, { touches }: GameEngineUpdateEventOptionType ) => {
   let move = touches.find((x: { type: string }) => x.type === 'move');
   if (move && move.delta) {
-    console.log ('Touch event registered', move);
+    console.log ('Move event registered', move);
   }
 
   return entities;
@@ -32,4 +41,4 @@ export const onCollision = (event: IEventCollision<Matter.Engine>) => {
   var objectB = pairs[0].bodyB.label;
 
   console.log ('Collision registered', objectA, objectB);
-}
+};

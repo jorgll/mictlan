@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Game extends Component {
+export default class GameScreen extends Component {
   
   constructor(props: any) {
     super(props);
 
     Matter.World.add(
-     entities.physics.world, [ ]);
+     entities.physics.world, [ entities.wizard.body ]);
   }
 
   onCollision = (event: IEventCollision<Matter.Engine>) => {
@@ -35,6 +35,7 @@ export default class Game extends Component {
   }
 
   render() {
+    console.log('Game render');
     return (
       <GameEngine
         style={styles.container}
