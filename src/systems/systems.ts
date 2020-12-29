@@ -7,8 +7,8 @@ import Animation from '../components/Animation';
 // Prep and update world
 export const onTimer = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
 
-  // Animate wizard if needed
-  Animation.update(entities.wizard, time.current)
+  // Update animated sprite images
+  Animation.update(time.current)
 
   // Update physics
   let engine = entities.physics.engine;

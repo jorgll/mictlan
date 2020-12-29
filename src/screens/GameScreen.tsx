@@ -5,6 +5,7 @@ import Matter, { IEventCollision } from 'matter-js';
 import { GameEngine } from 'react-native-game-engine';
 import { entities } from '../entities/entities';
 import { onTouch, onTimer, onCollision } from '../systems/systems';
+import Animation from '../components/Animation';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +21,13 @@ export default class GameScreen extends Component {
   constructor(props: any) {
     super(props);
 
+    // Initialize animated sprites
+    Animation.track(entities.wizard);
+
+    // Initialize MatterJS world and render entities
     Matter.World.add(
-     entities.physics.world, [ entities.wizard.body ]);
+     entities.physics.world, 
+     [ entities.wizard.body ]);
   }
 
   onCollision = (event: IEventCollision<Matter.Engine>) => {

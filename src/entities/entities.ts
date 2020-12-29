@@ -53,7 +53,6 @@ export const entities: any = {
     },
     animation: {
       lastAnimationDelta: Date.now(),
-      // lastAnimationDelta: 0,
       animationSpeedInMilliseconds: 400,
     },
     renderer: Sprite
