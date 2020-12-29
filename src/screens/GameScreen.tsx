@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import Matter, { IEventCollision } from 'matter-js';
 import { GameEngine } from 'react-native-game-engine';
 import { entities } from '../entities/entities';
-import { onTouch, onPhysics, onCollision } from '../systems/systems';
+import { onTouch, onTimer, onCollision } from '../systems/systems';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +39,7 @@ export default class GameScreen extends Component {
     return (
       <GameEngine
         style={styles.container}
-        systems={[onPhysics, onTouch]}
+        systems={[onTimer, onTouch]}
         entities={entities}>
       </GameEngine>
     );

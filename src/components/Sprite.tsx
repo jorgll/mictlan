@@ -8,8 +8,10 @@ type SpriteProps = Readonly <{
   height: number;
   xAdjustment: number;
   yAdjustment: number;
-  imageResources: ImageRequireSource[];
-  currentImage: number;
+  sprite: {
+    imageResources: ImageRequireSource[],
+    currentImage: number;
+  }
 }>;
 
 const Sprite = ({ 
@@ -18,8 +20,7 @@ const Sprite = ({
   height, 
   xAdjustment, 
   yAdjustment, 
-  imageResources, 
-  currentImage }: SpriteProps) => {
+  sprite }: SpriteProps) => {
 
     const xAdjust = xAdjustment ? xAdjustment : 0;
     const yAdjust = yAdjustment ? yAdjustment : 0;
@@ -28,7 +29,7 @@ const Sprite = ({
 
     return (
       <Image
-        source={imageResources[currentImage]}
+        source={sprite.imageResources[sprite.currentImage]}
         style={{
           position: 'absolute',
           left: x,

@@ -1,18 +1,14 @@
 import Matter, { IEventCollision } from 'matter-js';
 import { entities } from '../entities/entities';
 import { GameEngineUpdateEventOptionType } from 'react-native-game-engine';
+import Animation from '../components/Animation';
 
-// Physics system
-// Update Matter.js world with each tick
-export const onPhysics = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
+// Timer system
+// Prep and update world
+export const onTimer = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
 
-  // Animate wizard
-  if (entities.wizard.lastAnimationDelta > 400) {
-    entities.wizard.currentImage = (entities.wizard.currentImage +1) % 4;
-    entities.wizard.lastAnimationDelta = 0;
-  } else {
-    entities.wizard.lastAnimationDelta = entities.wizard.lastAnimationDelta + time.delta;
-  }
+  // Animate wizard if needed
+  Animation.update(entities.wizard, time.current)
 
   // Update physics
   let engine = entities.physics.engine;

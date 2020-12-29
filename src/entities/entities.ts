@@ -1,5 +1,4 @@
 import Matter from 'matter-js';
-
 import Sprite from '../components/Sprite';
 
 let engine = Matter.Engine.create({ enableSleeping: false });
@@ -32,7 +31,7 @@ const bodies = {
   ),
 }
 
-export const entities = {
+export const entities: any = {
   physics: {
     engine: engine,
     world: world,
@@ -43,14 +42,20 @@ export const entities = {
     height: PLAYER_SPRITE_HEIGHT * PIXEL_MULTIPLIER,
     xAdjustment: 0,
     yAdjustment: 0,
-    imageResources: [
-      require('../entities/sprites/wizzard_m_idle_anim_f0.png'),
-      require('../entities/sprites/wizzard_m_idle_anim_f1.png'),
-      require('../entities/sprites/wizzard_m_idle_anim_f2.png'),
-      require('../entities/sprites/wizzard_m_idle_anim_f3.png'),
-    ],
-    currentImage: 1,
-    lastAnimationDelta: 0,
+    sprite: {
+      imageResources: [
+        require('../entities/sprites/wizzard_m_idle_anim_f0.png'),
+        require('../entities/sprites/wizzard_m_idle_anim_f1.png'),
+        require('../entities/sprites/wizzard_m_idle_anim_f2.png'),
+        require('../entities/sprites/wizzard_m_idle_anim_f3.png'),
+      ],
+      currentImage: 1,
+    },
+    animation: {
+      lastAnimationDelta: Date.now(),
+      // lastAnimationDelta: 0,
+      animationSpeedInMilliseconds: 400,
+    },
     renderer: Sprite
   }
 }
