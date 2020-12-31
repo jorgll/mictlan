@@ -1,9 +1,15 @@
-import { entities } from "../entities/entities";
+//
+// Animation class
+// Encapsulates logic needed to manipulate on-screen Sprites using metadata in entities.ts
+// Called by onTimer() as it dispatches each frame
+// Set up by GameScreen.tsx during screen initialization
+//
 
 type AnimatableEntity = Readonly <{
   sprite: {
     currentImage: number;
     imageResources: [];
+    type: "animated" | "static";
   },
   animation: {
     lastAnimationDelta: number;
@@ -15,7 +21,9 @@ class Animation {
   static entitiesToAnimate: AnimatableEntity[] = [];
 
   public static track(entity: AnimatableEntity) {
-    Animation.entitiesToAnimate.push(entity);
+    if (entity.sprite.type === "animated") {
+      Animation.entitiesToAnimate.push(entity);
+    }
   }
 
   public static update(currentTime: number) {

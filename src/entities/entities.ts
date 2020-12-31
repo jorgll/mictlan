@@ -1,47 +1,25 @@
-import Matter from 'matter-js';
-import Sprite from '../components/Sprite';
+import Room from '../components/React/Room';
+import Sprite from '../components/React/Sprite';
 
-let engine = Matter.Engine.create({ enableSleeping: false });
-let world = engine.world;
-
-const GAME_WIDTH = 650;
-const GAME_HEIGHT = 340;
-
-const PLAYER_START_POINT_X = GAME_WIDTH / 2;
-const PLAYER_START_POINT_Y = GAME_HEIGHT / 2;
-
-const PLAYER_SPRITE_WIDTH = 16;
-const PLAYER_SPRITE_HEIGHT = 28;
 const PIXEL_MULTIPLIER = 6;
 
-const playerSettings = {
-  isStatic: true,
-}
-
-const bodies = {
-  wizard: Matter.Bodies.rectangle(
-    PLAYER_START_POINT_X,
-    PLAYER_START_POINT_Y,
-    PLAYER_SPRITE_WIDTH * PIXEL_MULTIPLIER,
-    PLAYER_SPRITE_HEIGHT * PIXEL_MULTIPLIER,
-    {
-      ...playerSettings,
-      label: 'wizard',
-    }
-  ),
-}
-
+//
+// Entity store
+// Entities should consist only of simple metadata
+// Each entity has a unique ID and enough information to recreate an object and persist its state
+// To send data between systems you typically use Components
+// More details at https://en.wikipedia.org/wiki/Entity_component_system
+//
 export const entities: any = {
-  physics: {
-    engine: engine,
-    world: world,
-  },
   wizard: {
-    body: bodies.wizard,
-    width: PLAYER_SPRITE_WIDTH * PIXEL_MULTIPLIER,
-    height: PLAYER_SPRITE_HEIGHT * PIXEL_MULTIPLIER,
+    id: "wizard",
+    renderer: Sprite,
+    width: 8 * PIXEL_MULTIPLIER,
+    height: 14 * PIXEL_MULTIPLIER,
     xAdjustment: 0,
     yAdjustment: 0,
+    startPointX: 0,
+    startPointY: 28,
     sprite: {
       imageResources: [
         require('../entities/sprites/wizzard_m_idle_anim_f0.png'),
@@ -50,11 +28,35 @@ export const entities: any = {
         require('../entities/sprites/wizzard_m_idle_anim_f3.png'),
       ],
       currentImage: 1,
+      type: "animated",
     },
     animation: {
       lastAnimationDelta: Date.now(),
       animationSpeedInMilliseconds: 400,
     },
-    renderer: Sprite
+  },
+  room: {
+    id: "room",
+    renderer: Room,
+    floorTilesX: 10,
+    floorTilesY: 10,
+    floorTile: {
+      sprite: {
+        imageResources: [
+          require('../entities/sprites/floor_1.png'),
+          require('../entities/sprites/floor_2.png'),
+          require('../entities/sprites/floor_3.png'),
+          require('../entities/sprites/floor_4.png'),
+          require('../entities/sprites/floor_5.png'),
+          require('../entities/sprites/floor_6.png'),
+          require('../entities/sprites/floor_7.png'),
+          require('../entities/sprites/floor_8.png'),
+        ],
+        width: 24,
+        height: 24,
+        currentImage: 1,
+        type: "static",
+      }
+    }
   }
 }

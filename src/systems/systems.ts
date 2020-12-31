@@ -1,17 +1,17 @@
 import Matter, { IEventCollision } from 'matter-js';
-import { entities } from '../entities/entities';
 import { GameEngineUpdateEventOptionType } from 'react-native-game-engine';
-import Animation from '../components/Animation';
+import Animation from './Animation';
+import { World } from '../components/Game/World'
 
 // Timer system
-// Prep and update world
+// Each tick, process and update sub-systems, dispatching callbacks for all entities
 export const onTimer = (entities: any, { time }: GameEngineUpdateEventOptionType ) => {
 
   // Update animated sprite images
   Animation.update(time.current)
 
   // Update physics
-  let engine = entities.physics.engine;
+  let engine = World.getEngine();
   engine.world.gravity.y = 0;
   Matter.Engine.update(engine, time.delta);
   return entities;
