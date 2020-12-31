@@ -2,15 +2,13 @@
 import React from 'react';
 import { Image, ImageRequireSource } from 'react-native';
 
-type SpriteProps = Readonly <{
+export type SpriteProps = Readonly <{
   width: number;
   height: number;
   x: number;
   y: number;
-  sprite: {
-    imageResources: ImageRequireSource[],
-    currentImage: number;
-  }
+  imageResources: ImageRequireSource[];
+  currentImage: number;
 }>;
 
 const Sprite = ({ 
@@ -18,11 +16,20 @@ const Sprite = ({
   height, 
   x, 
   y, 
-  sprite }: SpriteProps) => {
+  imageResources,
+  currentImage }: SpriteProps) => {
+
+    if (!imageResources || imageResources.length == 0) {
+      return null;
+    }
+
+    if (imageResources.length > 4) {
+      console.log("Rendering room tile");
+    }
 
     return (
       <Image
-        source={sprite.imageResources[sprite.currentImage]}
+        source={imageResources[currentImage]}
         style={{
           position: 'absolute',
           left: x,

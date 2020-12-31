@@ -6,7 +6,6 @@ import Matter from 'matter-js';
 // Player class
 // Knows how to render and update state for primary Player object
 //
-
 export class Player {
   private _body: Matter.Body;
 
@@ -25,9 +24,11 @@ export class Player {
       }
     )
 
+    console.log("MatterJS body initialized");
     // Initialize animated sprite
     Animation.track(entities.wizard);
 
+    console.log("Animation initialized initialized");
     // Add entity to World
     Matter.World.add( world, [ this._body ]);
     

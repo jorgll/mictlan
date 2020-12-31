@@ -1,65 +1,75 @@
 import React from 'react';
-import { View, Image, ImageRequireSource } from 'react-native';
-
-class SpriteProperties {
-  public imageResources: ImageRequireSource[] = [];
-  public currentImage: number = 0;
-  public width: number = 0;
-  public height: number = 0;
-  public left: number = 0;
-  public top: number = 0;
-};
+import { View, Text } from 'react-native';
+import Sprite, { SpriteProps } from './Sprite';
 
 type RoomProps = Readonly <{
   floorTilesX: number;
   floorTilesY: number;
-  floorTile: {
-    sprite: SpriteProperties;
-  }
+  floorTile: SpriteProps;
 }>;
 
-const roomTiles: any = [];
+interface Tile { 
+  x: number,
+  y: number,
+  imageIndex: number
+};
+
+const floorTileLocations: Tile[] = [];
 
 // Set up room tiles based on room entity metadata counts
-const setup = (floorTilesX: number, floorTile: any) => {
-  if (roomTiles.length === 0) {
-    let currentXposition = 0;
-    for (let i = 0; i < floorTilesX; i++) {
-      const tile = new SpriteProperties();
-      tile.currentImage = floorTile.sprite.currentImage;
-      tile.height = floorTile.sprite.height;
-      tile.width = floorTile.sprite.width;
-      tile.left = currentXposition + floorTile.sprite.width;
-      currentXposition = tile.left;
-      roomTiles.push(tile);
+const setup = (floorTilesX: number, floorTilesY: number, floorTile: SpriteProps) => {
+  let currentXposition = 0;
+  let currentYposition = 0;
+  let tile: Tile = { x: 0, y: 0, imageIndex: 0 }
+  console.log ("Setting up floor tiles");
+
+  // TODO: Pick a random tile image on the floor
+  for (let i = 0; i < floorTilesY; i++) {
+    for (let j = 0; j < floorTilesX; j++) {
+      tile = { 
+        x: currentXposition + floorTile.width,
+        y: currentYposition + floorTile.height,
+        imageIndex: Math.floor(Math.random() * 8),
+      };
+      currentXposition += floorTile.width;
+      floorTileLocations.push(tile);
     }
+    currentXposition = 0;
+    currentYposition += floorTile.height;
   }
+  console.log("Floor tiles set up: ");
+  console.log(floorTileLocations);
 }
 
 const Room = ({ 
   floorTilesX, 
-  floorTilesY, 
+  floorTilesY,
   floorTile,
   }: RoomProps) => {
 
-    setup(floorTilesX, floorTile);
+    if (floorTileLocations.length === 0) {
+      setup(floorTilesX, floorTilesY, floorTile);
+    }
+    const tileEntity = floorTile;
+
+    const spriteMatrix = floorTileLocations.map(tile => (
+      <View>
+        <Sprite
+          key = { `$(tile.x)$(tile.y)$(tile.imageIndex)` }
+          imageResources = { tileEntity.imageResources }
+          currentImage = { tile.imageIndex }
+          x = { tile.x }
+          y = { tile.y }
+          width = { tileEntity.width }
+          height = { tileEntity.height }
+        />
+      </View>
+    ));
 
     return (
-      <View>
-        {roomTiles && roomTiles.map(tile => {
-          <Image
-            source={floorTile.sprite.imageResources[tile.currentImage]}
-            style={{
-              position: 'absolute',
-              left: tile.left,
-              top: tile.top,
-              width: tile.width,
-              height: tile.height,
-            }}
-          />
-        })}
-        
-    </View>
+      <>
+        {spriteMatrix}
+      </>
   );
 };
 

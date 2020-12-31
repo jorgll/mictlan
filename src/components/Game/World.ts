@@ -13,11 +13,10 @@ class World {
 
   constructor() {
 
-    // Initialize MatterJS world
+    // Initialize MatterJS engine and world
     console.log("World - Initialize");
     this._engine = Matter.Engine.create({ enableSleeping: false });
     this._engine.enabled = true;
-
     this._world = this._engine.world;
 
     // Set up collision detection system
@@ -25,6 +24,16 @@ class World {
 
     // Set up Player entity
     this._player = new Player(this._world);
+
+    // // Set up Room entity
+    // Matter.World.add(this._world, [
+    //   Matter.Bodies.rectangle(
+    //     0, 0, 240, 24, {
+    //       isStatic: true,
+    //       isSensor: false,
+    //     }
+    //   )
+    // ]);
 
     console.log("World - Initialize done");
   }

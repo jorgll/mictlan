@@ -5,23 +5,22 @@
 // Set up by GameScreen.tsx during screen initialization
 //
 
-type AnimatableEntity = Readonly <{
-  sprite: {
-    currentImage: number;
-    imageResources: [];
-    type: "animated" | "static";
-  },
+type AnimatableEntity = {
+  currentImage: number;
+  imageResources: [];
+  type: "animated" | "static";
   animation: {
     lastAnimationDelta: number;
     animationSpeedInMilliseconds: number;
   }
-}>;
+};
 
 class Animation {
   static entitiesToAnimate: AnimatableEntity[] = [];
 
   public static track(entity: AnimatableEntity) {
-    if (entity.sprite.type === "animated") {
+    console.log(entity);
+    if (entity.type === "animated") {
       Animation.entitiesToAnimate.push(entity);
     }
   }
@@ -29,10 +28,10 @@ class Animation {
   public static update(currentTime: number) {
 
     // Iterate through each tracked entity to animate and calculate its new sprite image based on time
-    this.entitiesToAnimate.map(entity => {
-      if (currentTime - entity.animation.lastAnimationDelta > entity.animation.animationSpeedInMilliseconds) {
-        entity.sprite.currentImage = (entity.sprite.currentImage +1) % entity.sprite.imageResources.length;
-        entity.animation.lastAnimationDelta = currentTime;
+    this.entitiesToAnimate.map(e => {
+      if (currentTime - e.animation.lastAnimationDelta > e.animation.animationSpeedInMilliseconds) {
+        e.currentImage = (e.currentImage +1) % e.imageResources.length;
+        e.animation.lastAnimationDelta = currentTime;
       }    
     })
 
