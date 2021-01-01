@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Sprite, { SpriteProps } from './Sprite';
 
 type RoomProps = Readonly <{
@@ -55,13 +55,15 @@ const Room = ({
     const spriteMatrix = floorTileLocations.map(tile => (
       <View>
         <Sprite
-          key = { `$(tile.x)$(tile.y)$(tile.imageIndex)` }
-          imageResources = { tileEntity.imageResources }
-          currentImage = { tile.imageIndex }
-          x = { tile.x }
-          y = { tile.y }
+          id = { tileEntity.id }
+          key = { `id$(tile.id)x$(tile.x)y$(tile.y)i$(tile.imageIndex)` }
           width = { tileEntity.width }
           height = { tileEntity.height }
+          x = { tile.x }
+          y = { tile.y }
+          zIndex = { tileEntity.zIndex }
+          imageResources = { tileEntity.imageResources }
+          currentImage = { tile.imageIndex }
         />
       </View>
     ));

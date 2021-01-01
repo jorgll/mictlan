@@ -7,9 +7,9 @@ import { onTouch, onTimer } from '../systems/systems';
 
 const styles = StyleSheet.create({
   container: {
-    width: 650,
+    width: 700,
     height: 340,
-    backgroundColor: '#FFF',
+    backgroundColor: '#EEEEEE',
     alignSelf: 'center',
   },
 });
@@ -21,7 +21,6 @@ export default class GameScreen extends Component {
   }
 
   render() {
-    console.log('Game render');
     return (
       <GameEngine
         style={styles.container}

@@ -6,6 +6,7 @@
 //
 
 type AnimatableEntity = {
+  id: string;
   currentImage: number;
   imageResources: [];
   type: "animated" | "static";
@@ -19,7 +20,6 @@ class Animation {
   static entitiesToAnimate: AnimatableEntity[] = [];
 
   public static track(entity: AnimatableEntity) {
-    console.log(entity);
     if (entity.type === "animated") {
       Animation.entitiesToAnimate.push(entity);
     }

@@ -12,11 +12,13 @@ const PIXEL_MULTIPLIER = 6;
 //
 export const entities: any = {
   wizard: {
+    id: "wizard",
     renderer: Sprite,
-    width: 8 * PIXEL_MULTIPLIER,
-    height: 14 * PIXEL_MULTIPLIER,
-    x: 0,
-    y: 0,
+    width: 4 * PIXEL_MULTIPLIER,
+    height: 8 * PIXEL_MULTIPLIER,
+    x: 58 + (48*5),
+    y: 40 + (48*2),
+    zIndex: 1,
     imageResources: [
       require('../entities/sprites/wizzard_m_idle_anim_f0.png'),
       require('../entities/sprites/wizzard_m_idle_anim_f1.png'),
@@ -31,14 +33,17 @@ export const entities: any = {
     },
   },
   room: {
+    id: "room",
     renderer: Room,
-    floorTilesX: 13,
+    floorTilesX: 12,
     floorTilesY: 6,
     floorTile: {
+      id: "floorTile",
       width: 48,
       height: 48,
       x: 0,
-      y: 0,
+      y: 24,
+      zIndex: 0,
       imageResources: [
         require('../entities/sprites/floor_1.png'),
         require('../entities/sprites/floor_2.png'),
